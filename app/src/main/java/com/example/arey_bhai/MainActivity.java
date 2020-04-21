@@ -123,6 +123,8 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 final WifiP2pDevice device=deviceArray[position];
+                String client_mac_fixed = new String(device.deviceAddress).replace("99", "19");
+                String clientIP = Utils.getIPFromMac(client_mac_fixed);
                 WifiP2pConfig config=new WifiP2pConfig();
                 config.deviceAddress=device.deviceAddress;
 
@@ -137,15 +139,17 @@ public class MainActivity extends AppCompatActivity {
                      //   Toast.makeText(getApplicationContext(),"Not connected",Toast.LENGTH_SHORT).show();
                     //}
                 //});
+
                 mManger.createGroup(mChannle, new WifiP2pManager.ActionListener() {
                     @Override
                     public void onSuccess() {
-                        Toast.makeText(getApplicationContext(),"connected to "+device.deviceName,Toast.LENGTH_SHORT).show();
+                        Toast.makeText(getApplicationContext(),"success ",Toast.LENGTH_SHORT).show();
+
                     }
 
                     @Override
                     public void onFailure(int reason) {
-                        Toast.makeText(getApplicationContext(),"Not connected",Toast.LENGTH_SHORT).show();
+                        Toast.makeText(getApplicationContext(),"Not connected!!",Toast.LENGTH_SHORT).show();
                     }
                 });
             }
